@@ -57,7 +57,6 @@ class AuthServiceTest {
         // Then
         Optional<User> userOptional = userRepository.findByUserId("tester");
 
-
         assertThat(userOptional).isPresent();
         User user = userOptional.get();
         assertThat(user.getUserId()).isEqualTo("tester");

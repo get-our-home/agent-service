@@ -36,7 +36,7 @@ public class AuthController {
             summary = "회원가입",
             description = "유저 이름, 유저 아이디, 비밀번호, 전화번호, 공인중개사 등록번호를 받고 회원가입을 진행합니다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회원가입 성공",
+            @ApiResponse(responseCode = "201", description = "회원가입 성공",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = BaseResponseDto.class)) }),
             @ApiResponse(responseCode = "400", description = "유저 ID 중복",
