@@ -44,5 +44,21 @@ public class User {
     @Setter
     @Column(nullable = false, unique = true)
     private String email;
+
+    @Setter
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "registration_status", nullable = false)
+    private RegistrationStatus registrationStatus = RegistrationStatus.PENDING;
+
+    @Setter
+    @Column(name = "reject_reason")
+    private String rejectReason;
+
+    @PrePersist
+    protected void onCreate() {
+        if (registrationStatus == null) {
+            registrationStatus = RegistrationStatus.PENDING;
+        }
+    }
 }
 
