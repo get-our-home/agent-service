@@ -20,6 +20,7 @@ public class ManagementService {
             return null;
         }
         user.setRegistrationStatus(RegistrationStatus.ACCEPTED);
+        user.setRejectReason(null);
         return userRepository.save(user);
     }
 
