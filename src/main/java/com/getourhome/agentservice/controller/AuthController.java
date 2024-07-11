@@ -4,6 +4,7 @@ import com.getourhome.agentservice.dto.request.LoginRequestDto;
 import com.getourhome.agentservice.dto.request.UserRegisterDto;
 import com.getourhome.agentservice.dto.response.BaseResponseDto;
 import com.getourhome.agentservice.dto.response.UserResponseDto;
+import com.getourhome.agentservice.entity.RegistrationStatus;
 import com.getourhome.agentservice.entity.User;
 import com.getourhome.agentservice.service.AuthService;
 import com.getourhome.agentservice.util.JwtTokenProvider;
@@ -74,6 +75,8 @@ public class AuthController {
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = UserResponseDto.class)) }),
             @ApiResponse(responseCode = "400", description = "사용자 ID 또는 비밀번호를 찾을 수 없음",
+                    content = @Content),
+            @ApiResponse(responseCode = "401", description = "가입 승인되지 않은 공인중개사",
                     content = @Content)})
     public ResponseEntity<?> loginUser(@RequestBody LoginRequestDto loginRequestDto) {
         User user = authService.login(loginRequestDto);
@@ -83,10 +86,16 @@ public class AuthController {
             return ResponseEntity.badRequest().body(response);
         }
 
+        if(user.getRegistrationStatus() != RegistrationStatus.ACCEPTED){
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "가입 승인되지 않은 공인중개사입니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+
         UserResponseDto userResponseDto = UserResponseDto
                 .builder()
                 .role("AGENT")
-                .jwt(jwtTokenProvider.createTokenWithoutExpiration(user.getId(), user.getUserId()))
+                .jwt(jwtTokenProvider.createTokenWithoutExpiration(user.getId(), user.getAgencyName()))
                 .build();
         return ResponseEntity.ok(userResponseDto);
     }

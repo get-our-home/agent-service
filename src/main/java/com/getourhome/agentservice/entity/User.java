@@ -30,6 +30,10 @@ public class User {
     private String username;
 
     @Setter
+    @Column(name = "agency_name", nullable = false)
+    private String agencyName;
+
+    @Setter
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber;
 

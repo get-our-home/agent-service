@@ -26,14 +26,14 @@ public class JwtTokenProvider {
         this.validityInMilliseconds = validityInMilliseconds;
     }
 
-    public String createToken(UUID id, String userId) {
+    public String createToken(UUID id, String agencyName) {
         log.info("Creating token with validity: " + validityInMilliseconds + " milliseconds");
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
         return Jwts.builder()
                 .claim("id", id.toString())
-                .claim("userId", userId)
+                .claim("agencyName", agencyName)
                 .claim("role", role)
                 .issuedAt(now)
                 .expiration(validity)
@@ -41,7 +41,7 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public String createTokenWithoutExpiration(UUID id, String userId) {
+    public String createTokenWithoutExpiration(UUID id, String agencyName) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
         log.info("now: " + now );
@@ -49,7 +49,7 @@ public class JwtTokenProvider {
 
         return Jwts.builder()
                 .claim("id", id.toString())
-                .claim("userId", userId)
+                .claim("agencyName", agencyName)
                 .claim("role", role)
                 .signWith(secretKey)
                 .compact();
@@ -68,13 +68,13 @@ public class JwtTokenProvider {
         }
     }
 
-    public String getUserId(String token) {
+    public String getAgencyName(String token) {
         return Jwts.parser()
                 .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
-                .get("userId", String.class);
+                .get("agencyName", String.class);
     }
 
     public UUID getUserPk(String token) {
