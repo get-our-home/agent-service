@@ -3,6 +3,7 @@ package com.getourhome.agentservice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.getourhome.agentservice.dto.request.LoginRequestDto;
 import com.getourhome.agentservice.dto.request.UserRegisterDto;
+import com.getourhome.agentservice.entity.RegistrationStatus;
 import com.getourhome.agentservice.entity.User;
 import com.getourhome.agentservice.service.AuthService;
 import com.getourhome.agentservice.util.JwtTokenProvider;
@@ -55,6 +56,7 @@ class AuthControllerTest {
                 .username("김테스트")
                 .phoneNumber("01012341234")
                 .registrationNumber("11111-0000-1111")
+                .agencyName("테스트 공인중개사")
                 .password("tester1234")
                 .email("tester@test.com")
                 .build();
@@ -79,6 +81,7 @@ class AuthControllerTest {
                 .username("김테스트2")
                 .phoneNumber("01011111111")
                 .registrationNumber("11111-0000-1111")
+                .agencyName("테스트 공인중개사")
                 .password("tester1234")
                 .email("tester2@test.com")
                 .build();
@@ -103,6 +106,7 @@ class AuthControllerTest {
                 .userId("tester")
                 .username("김테스트2")
                 .phoneNumber("01011111111")
+                .agencyName("테스트 공인중개사")
                 .registrationNumber("11111-0000-1111")
                 .password("tester1234")
                 .email("tester2@test.com")
@@ -127,6 +131,7 @@ class AuthControllerTest {
                 .userId("tester")
                 .username("김테스트2")
                 .phoneNumber("01011111111")
+                .agencyName("테스트 공인중개사")
                 .registrationNumber("11111-0000-1111")
                 .password("tester1234")
                 .email("tester2@test.com")
@@ -152,7 +157,10 @@ class AuthControllerTest {
                 .password("test123")
                 .build();
 
-        when(authService.login(any(LoginRequestDto.class))).thenReturn(new User());
+        User user = new User();
+        user.setRegistrationStatus(RegistrationStatus.ACCEPTED);
+
+        when(authService.login(any(LoginRequestDto.class))).thenReturn(user);
         when(jwtTokenProvider.createToken(any(UUID.class), any(String.class))).thenReturn("jwtToken");
 
         // When & Then
@@ -160,6 +168,26 @@ class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginRequestDto)))
                 .andExpect(status().isOk());
+    }
+
+    @DisplayName("가입 승인되지 않은 사용자 로그인 - 로그인 실패")
+    @Test
+    void givenLoginRequestDto_whenUnAcceptCredentials_thenReturnUnAuth() throws Exception{
+        // Given
+        LoginRequestDto loginRequestDto = LoginRequestDto
+                .builder()
+                .userId("tester")
+                .password("test123")
+                .build();
+
+        when(authService.login(any(LoginRequestDto.class))).thenReturn(new User());
+        when(jwtTokenProvider.createToken(any(UUID.class), any(String.class))).thenReturn("jwtToken");
+
+        // When & Then
+        mvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginRequestDto)))
+                .andExpect(status().isUnauthorized());
     }
 
     @DisplayName("사용자 로그인 - 존재하지 않는 아이디 혹은 비밀번호, 로그인 거부")

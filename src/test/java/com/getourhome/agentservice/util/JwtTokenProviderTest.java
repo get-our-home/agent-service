@@ -34,10 +34,10 @@ class JwtTokenProviderTest {
     void givenUserIdAndUserPk_whenCreateTokenWithoutExpiration_thenReturnToken() {
         // Given
         UUID userPk = UUID.randomUUID();
-        String userId = "tester";
+        String agencyName = "test공인중개사";
 
         // When
-        String token = jwtTokenProvider.createTokenWithoutExpiration(userPk, userId);
+        String token = jwtTokenProvider.createTokenWithoutExpiration(userPk, agencyName);
 
         // Then
         assertThat(token).isNotNull();
@@ -48,8 +48,8 @@ class JwtTokenProviderTest {
     void givenValidToken_whenValidateTokenAndWithoutExpiration_thenReturnTrue() {
         // Given
         UUID userPk = UUID.randomUUID();
-        String userId = "tester";
-        String token = jwtTokenProvider.createTokenWithoutExpiration(userPk, userId);
+        String agencyName = "test공인중개사";
+        String token = jwtTokenProvider.createTokenWithoutExpiration(userPk, agencyName);
 
         // When
         boolean isValid = jwtTokenProvider.validateToken(token);
@@ -76,14 +76,14 @@ class JwtTokenProviderTest {
     void givenValidTokenNoExpiration_whenGetUserId_thenReturnUserId() {
         // Given
         UUID userPk = UUID.randomUUID();
-        String userId = "tester";
-        String token = jwtTokenProvider.createTokenWithoutExpiration(userPk, userId);
+        String agencyName = "test공인중개사";
+        String token = jwtTokenProvider.createTokenWithoutExpiration(userPk, agencyName);
 
         // When
-        String extractedUserId = jwtTokenProvider.getUserId(token);
+        String extractedUserId = jwtTokenProvider.getAgencyName(token);
 
         // Then
-        assertThat(extractedUserId).isEqualTo(userId);
+        assertThat(extractedUserId).isEqualTo(agencyName);
     }
 
     @Test
@@ -91,8 +91,8 @@ class JwtTokenProviderTest {
     void givenValidTokenNoExpiration_whenGetUserPk_thenReturnUserPk() {
         // Given
         UUID userPk = UUID.randomUUID();
-        String userId = "tester";
-        String token = jwtTokenProvider.createTokenWithoutExpiration(userPk, userId);
+        String agencyName = "test공인중개사";
+        String token = jwtTokenProvider.createTokenWithoutExpiration(userPk, agencyName);
 
         // When
         UUID extractedUserPk = jwtTokenProvider.getUserPk(token);
@@ -106,8 +106,8 @@ class JwtTokenProviderTest {
     void givenValidTokenNoExpiration_whenGetUserPk_thenReturnRole() {
         // Given
         UUID userPk = UUID.randomUUID();
-        String userId = "tester";
-        String token = jwtTokenProvider.createTokenWithoutExpiration(userPk, userId);
+        String agencyName = "test공인중개사";
+        String token = jwtTokenProvider.createTokenWithoutExpiration(userPk, agencyName);
 
         // When
         String extractedUserPk = jwtTokenProvider.getRole(token);
@@ -121,10 +121,10 @@ class JwtTokenProviderTest {
     void givenUserIdAndUserPk_whenCreateToken_thenReturnToken() {
         // Given
         UUID userPk = UUID.randomUUID();
-        String userId = "tester";
+        String agencyName = "test공인중개사";
 
         // When
-        String token = jwtTokenProvider.createToken(userPk, userId);
+        String token = jwtTokenProvider.createToken(userPk, agencyName);
 
         // Then
         assertThat(token).isNotNull();
@@ -135,8 +135,8 @@ class JwtTokenProviderTest {
     void givenValidToken_whenValidateToken_thenReturnTrue() {
         // Given
         UUID userPk = UUID.randomUUID();
-        String userId = "tester";
-        String token = jwtTokenProvider.createToken(userPk, userId);
+        String agencyName = "test공인중개사";
+        String token = jwtTokenProvider.createToken(userPk, agencyName);
 
         // When
         boolean isValid = jwtTokenProvider.validateToken(token);
@@ -150,14 +150,14 @@ class JwtTokenProviderTest {
     void givenValidToken_whenGetUserId_thenReturnUserId() {
         // Given
         UUID userPk = UUID.randomUUID();
-        String userId = "tester";
-        String token = jwtTokenProvider.createToken(userPk, userId);
+        String agencyName = "test공인중개사";
+        String token = jwtTokenProvider.createToken(userPk, agencyName);
 
         // When
-        String extractedUserId = jwtTokenProvider.getUserId(token);
+        String extractedUserId = jwtTokenProvider.getAgencyName(token);
 
         // Then
-        assertThat(extractedUserId).isEqualTo(userId);
+        assertThat(extractedUserId).isEqualTo(agencyName);
     }
 
     @Test
@@ -165,8 +165,8 @@ class JwtTokenProviderTest {
     void givenValidToken_whenGetUserPk_thenReturnUserPk() {
         // Given
         UUID userPk = UUID.randomUUID();
-        String userId = "tester";
-        String token = jwtTokenProvider.createToken(userPk, userId);
+        String agencyName = "test공인중개사";
+        String token = jwtTokenProvider.createToken(userPk, agencyName);
 
         // When
         UUID extractedUserPk = jwtTokenProvider.getUserPk(token);
@@ -180,8 +180,8 @@ class JwtTokenProviderTest {
     void givenValidToken_whenGetUserPk_thenReturnRole() {
         // Given
         UUID userPk = UUID.randomUUID();
-        String userId = "tester";
-        String token = jwtTokenProvider.createToken(userPk, userId);
+        String agencyName = "test공인중개사";
+        String token = jwtTokenProvider.createToken(userPk, agencyName);
 
         // When
         String extractedUserPk = jwtTokenProvider.getRole(token);

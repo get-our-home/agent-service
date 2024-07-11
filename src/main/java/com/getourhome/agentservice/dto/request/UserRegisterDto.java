@@ -24,6 +24,10 @@ public class UserRegisterDto {
     @JsonProperty("registration_number")
     @Schema(description = "공인중개사 등록번호", example = "22222-1111-00000")
     private String registrationNumber;
+    @NotBlank(message = "공인중개사 상호명을 입력해주세요")
+    @JsonProperty("agency_name")
+    @Schema(description = "공인중개사 등록번호", example = "테스트 공인중개사")
+    private String agencyName;
     @NotBlank(message = "사용자 전화번호를 입력해주세요")
     @JsonProperty("phone_number")
     @Schema(description = "사용자 전화번호", example = "01012341234")
@@ -42,6 +46,7 @@ public class UserRegisterDto {
                 .userId(userId)
                 .password(passwordEncoder.encode(password))
                 .username(username)
+                .agencyName(agencyName)
                 .phoneNumber(phoneNumber)
                 .registrationNumber(registrationNumber)
                 .email(email)

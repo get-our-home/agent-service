@@ -46,6 +46,7 @@ class AuthServiceTest {
                 .userId("tester")
                 .username("김테스트")
                 .phoneNumber("01012341234")
+                .agencyName("테스트 공인중개사")
                 .registrationNumber("11111-0000-1111")
                 .password("tester1234")
                 .email("tester@test.com")
@@ -62,6 +63,7 @@ class AuthServiceTest {
         assertThat(user.getUserId()).isEqualTo("tester");
         assertThat(user.getUsername()).isEqualTo("김테스트");
         assertThat(user.getPhoneNumber()).isEqualTo("01012341234");
+        assertThat(user.getAgencyName()).isEqualTo("테스트 공인중개사");
         assertThat(user.getRegistrationNumber()).isEqualTo("11111-0000-1111");
         assertThat(passwordEncoder.matches("tester1234", user.getPassword())).isTrue();
         assertThat(user.getEmail()).isEqualTo("tester@test.com");
@@ -77,6 +79,7 @@ class AuthServiceTest {
                 .username("김테스트")
                 .phoneNumber("01012341234")
                 .registrationNumber("11111-0000-1111")
+                .agencyName("테스트 공인중개사")
                 .password(passwordEncoder.encode("tester1234"))
                 .email("tester@test.com")
                 .build();
@@ -105,6 +108,7 @@ class AuthServiceTest {
                 .userId("tester")
                 .username("김테스트")
                 .phoneNumber("01012341234")
+                .agencyName("테스트 공인중개사")
                 .registrationNumber("11111-0000-1111")
                 .password(passwordEncoder.encode("tester1234"))
                 .email("tester@test.com")
@@ -132,6 +136,7 @@ class AuthServiceTest {
                 .id(UUID.randomUUID())
                 .userId("tester")
                 .username("김테스트")
+                .agencyName("테스트 공인중개사")
                 .phoneNumber("01012341234")
                 .registrationNumber("11111-0000-1111")
                 .password(passwordEncoder.encode("tester1234"))
