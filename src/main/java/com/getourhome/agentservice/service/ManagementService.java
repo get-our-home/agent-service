@@ -33,4 +33,5 @@ public class ManagementService {
         user.setRejectReason(request.getReason());
         return userRepository.save(user);
     }
+    
 }
