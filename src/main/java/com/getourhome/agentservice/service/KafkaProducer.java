@@ -3,6 +3,8 @@ package com.getourhome.agentservice.service;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class KafkaProducer {
     private final KafkaTemplate<String, String> kafkaTemplate;
@@ -11,7 +13,7 @@ public class KafkaProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendAgencyNameChange(String agentId, String newAgencyName) {
+    public void sendAgencyNameChange(UUID agentId, String newAgencyName) {
         kafkaTemplate.send("agency-name-change", agentId + ":" + newAgencyName);
     }
 }

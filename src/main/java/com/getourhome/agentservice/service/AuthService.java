@@ -51,7 +51,7 @@ public class AuthService {
 
         user.setAgencyName(updateAgencyNameDto.getAgencyName());
         User updatedUser = userRepository.save(user);
-        kafkaProducer.sendAgencyNameChange(user.getUserId(), updateAgencyNameDto.getAgencyName());
+        kafkaProducer.sendAgencyNameChange(user.getId(), updateAgencyNameDto.getAgencyName());
         return updatedUser;
     }
 }
