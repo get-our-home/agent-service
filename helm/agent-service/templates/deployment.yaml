@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "agent-service.name" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "agent-service.name" . }}
+    app.kubernetes.io/name: {{ include "agent-service.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "agent-service.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "agent-service.name" . }}
+        app.kubernetes.io/name: {{ include "agent-service.name" . }}
+    spec:
+      containers:
+        - name: {{ include "agent-service.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: SECURITY_JWT_TOKEN_EXPIRE_LENGTH
+              valueFrom:
+                secretKeyRef:
+                  name: agent-service-secrets
+                  key: SECURITY_JWT_TOKEN_EXPIRE_LENGTH
+            - name: SECURITY_JWT_TOKEN_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: user-service-secrets
+                  key: SECURITY_JWT_TOKEN_SECRET_KEY
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory }}
+              cpu: {{ .Values.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.resources.limits.memory }}
+              cpu: {{ .Values.resources.limits.cpu }}
