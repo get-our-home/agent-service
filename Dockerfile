@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY build/libs/*.jar agent-service.jar
 
-EXPOSE 8082
+EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "agent-service.jar"]

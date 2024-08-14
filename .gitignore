@@ -142,4 +142,8 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+### Helm Chart
+# secret
+secret.yaml
+
 # End of https://www.toptal.com/developers/gitignore/api/gradle,java,intellij+all
